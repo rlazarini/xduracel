@@ -7,6 +7,7 @@ export default defineConfig({
   define: {
   	'process.env': {}
   },
+  base: '/xduracel/',
   resolve: {
   	alias: {
   		'@': resolve(__dirname, 'src')
