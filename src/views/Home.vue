@@ -1,11 +1,17 @@
 <template>
-  <main class="w-5/12">
-    <!-- HEHEHE -->
+  <main class="flex w-full h-[90vh] flex-col">
+    <Header />
+    <Content />
+    <Twitch />
+    aaa
   </main>
 </template>
 
 <script setup>
 import { useRouter } from "vue-router";
+import Header from "@/components/Header.vue";
+import Content from "@/components/Content.vue";
+import Twitch from "@/components/Twitch.vue";
 
 const router = useRouter();
 </script>

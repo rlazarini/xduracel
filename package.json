@@ -4,9 +4,10 @@
   "description": "Página para o xduracel",
   "author": "Rafael Lazarini",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "gh-page": "npm run build && git subtree split --prefix dist -b gh-pages && git push -f origin gh-pages:gh-pages && git branch -D gh-pages"
   },
   "dependencies": {
     "autoprefixer": "^10.4.2",
