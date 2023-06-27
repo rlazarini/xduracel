@@ -1,5 +1,5 @@
 <template>
-  <div class="twitch absolute bottom-6 left-3 p-2 rounded-full w-10 h-10 portrait:left-auto portrait:right-6 portrait:w-12 portrait:h-12">
+  <div class="twitch fixed bottom-6 left-3 p-2 rounded-full w-10 h-10 portrait:left-auto portrait:right-6 portrait:w-12 portrait:h-12">
     <a
       href="https://www.twitch.tv/xduracel"
       target="_blank"
