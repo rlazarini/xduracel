@@ -3,7 +3,6 @@
     <Header />
     <Content />
     <Twitch />
-    aaa
   </main>
 </template>
 
