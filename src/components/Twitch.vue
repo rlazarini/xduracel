@@ -7,7 +7,7 @@
       ></span>
       <span
         class="relative inline-flex rounded-full h-3 w-3 bg-red-500"
-        :class="{'bg-green-500': isOnOffline.hasOwnProperty('id')}"
+        :class="{'!bg-green-500': isOnOffline.hasOwnProperty('id')}"
       ></span>
     </span>
     <a
