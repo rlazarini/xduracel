@@ -1,8 +1,11 @@
 <template>
-  <ul class="flex flex-col items-center justify-center portrait:flex-row portrait:justify-around">
+  <ul
+    class="flex flex-col items-center justify-center portrait:flex-row portrait:justify-around"
+    v-if="socialMediaList.length"
+  >
     <li
       v-for="(sm, index) in socialMediaList"
-      :key="`${tipo}_${index}`"
+      :key="`${sm.tipo}_${index}`"
       class="py-4"
     >
       <a
