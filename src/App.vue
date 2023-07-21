@@ -13,12 +13,12 @@ html {
   height: 100vh;
   width: 100vw;
   background: rgba(9, 7, 8, 1);
-  background: url("/full_boneco.png") no-repeat 10% bottom / auto 75%,
+  background: url("/full_boneco.png") no-repeat 5% bottom / auto 63%,
     linear-gradient(
-        75deg,
+        85deg,
         rgba(255, 206, 15, 1) 0%,
-        rgba(255, 206, 15, 1) 30.8%,
-        rgba(9, 7, 8, 1) 31%
+        rgba(255, 206, 15, 1) 17.8%,
+        rgba(9, 7, 8, 1) 18%
       )
       center;
   background-repeat: no-repeat;

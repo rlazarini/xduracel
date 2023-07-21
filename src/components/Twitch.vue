@@ -68,9 +68,13 @@ const getLiveStatus = async () => {
       return data;
     });
 };
-onMounted(async () => {
+const isStatus = async () => {
   const dataIsOnOffline = await getLiveStatus();
   isOnOffline.value = dataIsOnOffline?.data[0] || {};
+};
+onMounted(async () => {
+  isStatus();
+  setInterval(isStatus, 1800000);
 });
 </script>
 

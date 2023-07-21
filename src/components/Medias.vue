@@ -10,13 +10,13 @@
     >
       <a
         :href="sm.link"
-        target="_blank"
+        :target="(sm.self ? '_self' : '_blank')"
         class="flex flex-col items-center justify-center"
       >
         <img
           :src="`/icons/icon-${sm.tipo}.png`"
           alt=""
-          class="max-w-[48px] portrait:max-w-[36px]"
+          class="max-w-[38px] portrait:max-w-[32px]"
         >
         <span class="text-sm portrait:text-xs portrait:font-bold">{{ sm.desc }}</span>
       </a>
@@ -46,6 +46,12 @@ const socialMediaList = ref([
     tipo: "livepix",
     desc: "Livepix",
     link: "https://livepix.gg/xduracel",
+  },
+  {
+    tipo: "calendar",
+    desc: "Agenda",
+    link: "/calendar",
+    self: true,
   },
 ]);
 </script>
