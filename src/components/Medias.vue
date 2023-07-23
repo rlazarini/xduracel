@@ -1,10 +1,10 @@
 <template>
   <ul
     class="flex flex-col items-center justify-center portrait:flex-row portrait:justify-around"
-    v-if="socialMediaList.length"
+    v-if="menuItens.length"
   >
     <li
-      v-for="(sm, index) in socialMediaList"
+      v-for="(sm, index) in menuItens"
       :key="`${sm.tipo}_${index}`"
       class="py-4"
     >
@@ -41,7 +41,7 @@
 
 <script setup>
 import { ref } from "vue";
-const socialMediaList = ref([
+const menuItens = ref([
   {
     tipo: "instagram",
     desc: "Instagram",
@@ -66,6 +66,12 @@ const socialMediaList = ref([
     tipo: "calendar",
     desc: "Agenda",
     link: "/calendar",
+    self: true,
+  },
+  {
+    tipo: "services",
+    desc: "Serviços",
+    link: "/services",
     self: true,
   },
 ]);

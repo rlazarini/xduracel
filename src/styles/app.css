@@ -6,3 +6,7 @@
 * {
 	font-family: 'Poppins', sans-serif;
 }
+.font-border {
+	text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.3), 1px -1px 0 rgba(0, 0, 0, 0.3),
+    -1px 1px 0 rgba(0, 0, 0, 0.3), 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
