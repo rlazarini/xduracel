@@ -9,13 +9,6 @@
           <div class="w-8/12 portrait:w-auto portrait:my-0 portrait:mx-auto portrait:max-w-[85vw]">
             <h2 class="text-2xl text-yellow-400 font-bold pb-5 font-border">Serviços</h2>
             <div id="accordion">
-              <!-- ---------------------------------------------- -->
-              <!-- ---------------------------------------------- -->
-              <!--            PRIMEIRO ITEM DO ACORDION           -->
-              <!--            PRIMEIRO ITEM DO ACORDION           -->
-              <!--            PRIMEIRO ITEM DO ACORDION           -->
-              <!-- ---------------------------------------------- -->
-              <!-- ---------------------------------------------- -->
               <div>
                 <input
                   type="checkbox"
@@ -173,13 +166,16 @@
                     <p class="mb-2 text-gray-500">Através do <a
                         href="https://www.facebook.com/xDuracelx/"
                         target="_blank"
-                      >facebook</a>, <a
+                        class="font-medium text-blue-600 hover:underline"
+                      >facebook <i class="fas fa-external-link-alt text-xs"></i></a>, <a
                         href="https://www.instagram.com/duracelgaming/"
                         target="_blank"
-                      >instagram</a> ou durante a live na <a
+                        class="font-medium text-blue-600 hover:underline"
+                      >instagram <i class="fas fa-external-link-alt text-xs"></i></a> ou durante a live na <a
                         href="https://www.twitch.tv/xduracel"
                         target="_blank"
-                      >twitch</a>.</p>
+                        class="font-medium text-blue-600 hover:underline"
+                      >twitch <i class="fas fa-external-link-alt text-xs"></i></a>.</p>
                   </div>
                 </div>
               </div>
