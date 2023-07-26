@@ -1,9 +1,12 @@
 <template>
   <div class="grid grid-cols-1 w-full place-items-center">
-    <a href="/">
+    <a
+      href="/"
+      class="ml-72 portrait:ml-0 inline-block"
+    >
       <img
         src="/logo.png"
-        class="max-h-40 mt-4 ml-72 portrait:mt-2 portrait:ml-0 portrait:max-w-[75vw] portrait:max-h-[13vh]"
+        class="logo-site max-h-40 mt-4 portrait:mt-2 portrait:max-w-[75vw] portrait:max-h-[13vh]"
       >
     </a>
   </div>
