@@ -22,13 +22,13 @@
         class="flex flex-col text-sm"
         v-if="playerStatus"
       >
-        <div class="text-lg"><strong>{{ playerStatus.user_name }}</strong></div>
+        <div class="text-lg leading-tight"><strong>{{ playerStatus.user_name }}</strong></div>
         <div><strong>Online:</strong> {{ playerStatus.viewer_count }}</div>
-        <div class="">Jogando {{ playerStatus.game_name }}</div>
+        <div class="underline underline-offset-1">Jogando {{ playerStatus.game_name }}</div>
         <div
           class="truncate max-w-[330px]"
           :title="playerStatus.title"
-        >Título: {{ playerStatus.title }}</div>
+        >Título: <em>{{ playerStatus.title }}</em></div>
       </div>
       <div v-else>
         <div class="ml-2 text-sm">Offline</div>
