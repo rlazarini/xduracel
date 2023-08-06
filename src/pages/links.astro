@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Links from "../components/Links.vue";
+---
+
+<Layout>
+  <div class="grid grid-cols-3 gap-4 portrait:grid-cols-1">
+    <div class="portrait:order-last portrait:hidden">
+    </div>
+    <div class="h-full col-span-2">
+      <div class="grid grid-cols-1 gap-4 text-white portrait:grid-rows-1 portrait:grid-cols-none portrait:pb-[200px]">
+        <div class="w-8/12 portrait:w-auto portrait:my-0 portrait:mx-auto portrait:max-w-[85vw]">
+          <h2 class="text-2xl text-white font-bold pb-5 font-border">Links úteis</h2>
+          <Links />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

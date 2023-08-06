@@ -3,13 +3,14 @@ import { webcrypto } from 'node:crypto';
 import { ByteLengthQueuingStrategy, CountQueuingStrategy, ReadableByteStreamController, ReadableStream as ReadableStream$1, ReadableStreamBYOBReader, ReadableStreamBYOBRequest, ReadableStreamDefaultController, ReadableStreamDefaultReader, TransformStream, WritableStream, WritableStreamDefaultController, WritableStreamDefaultWriter } from 'node:stream/web';
 import { File, FormData, Headers, Request as Request$1, Response, fetch } from 'undici';
 import { setTimeout as setTimeout$1, clearTimeout as clearTimeout$1 } from 'node:timers';
-import { A as App, d as deserializeManifest, renderers } from './renderers.mjs';
+import { A as App, f as deserializeManifest } from './chunks/astro.c208357e.mjs';
 import 'fast-glob';
-import nodePath__default from 'node:path';
+import nodePath from 'node:path';
 import 'node:url';
 import 'node:fs/promises';
 import 'node:fs';
 import { splitCookiesString } from 'set-cookie-parser';
+import { renderers } from './renderers.mjs';
 import 'mime';
 import 'cookie';
 import 'kleur/colors';
@@ -18,11 +19,6 @@ import 'path-to-regexp';
 import 'string-width';
 import 'vue';
 import 'vue/server-renderer';
-import 'mime/lite.js';
-import 'node:os';
-import 'node:worker_threads';
-import 'module';
-import 'worker_threads';
 
 /** Returns the function bound to the given object. */
 const __function_bind = Function.bind.bind(Function.call);
@@ -2419,7 +2415,7 @@ polyfill.internals = (target, name) => {
     return target;
 };
 
-nodePath__default.posix.join;
+nodePath.posix.join;
 
 const ASTRO_LOCALS_HEADER = "x-astro-locals";
 
@@ -2606,9 +2602,11 @@ const adapter = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   createExports
 }, Symbol.toStringTag, { value: 'Module' }));
 
-const _page0  = () => import('./renderers.mjs').then(n => n.i);
-const _page1  = () => import('./chunks/index@_@astro.f8f02922.mjs');const pageMap = new Map([["node_modules/astro/dist/assets/image-endpoint.js", _page0],["src/pages/index.astro", _page1]]);
-const _manifest = Object.assign(deserializeManifest({"adapterName":"@astrojs/vercel/serverless","routes":[{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"type":"endpoint","route":"/_image","pattern":"^\\/_image$","segments":[[{"content":"_image","dynamic":false,"spread":false}]],"params":[],"component":"node_modules/astro/dist/assets/image-endpoint.js","pathname":"/_image","prerender":false,"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"/_astro/index.742d7cfe.css"}],"routeData":{"route":"/","type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":false,"_meta":{"trailingSlash":"ignore"}}}],"base":"/","compressHTML":false,"markdown":{"drafts":false,"syntaxHighlight":"shiki","shikiConfig":{"langs":[],"theme":"github-dark","wrap":false},"remarkPlugins":[],"rehypePlugins":[],"remarkRehype":{},"gfm":true,"smartypants":true},"componentMetadata":[["C:/Users/joaol/_git/_projetos/xduracel-git/src/pages/index.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var i=t=>{let e=async()=>{await(await t())()};\"requestIdleCallback\"in window?window.requestIdleCallback(e):setTimeout(e,200)};(self.Astro||(self.Astro={})).idle=i;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var s=(i,t)=>{let a=async()=>{await(await i())()};if(t.value){let e=matchMedia(t.value);e.matches?a():e.addEventListener(\"change\",a,{once:!0})}};(self.Astro||(self.Astro={})).media=s;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var r=(i,c,n)=>{let s=async()=>{await(await i())()},t=new IntersectionObserver(e=>{for(let o of e)if(o.isIntersecting){t.disconnect(),s();break}});for(let e of n.children)t.observe(e)};(self.Astro||(self.Astro={})).visible=r;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"\u0000@astro-renderers":"renderers.mjs","\u0000@astrojs-ssr-virtual-entry":"_@astrojs-ssr-virtual-entry.mjs","\u0000empty-middleware":"_empty-middleware.mjs","/src/pages/index.astro":"chunks/pages/index.astro.244b817a.mjs","\u0000@astro-page:src/pages/index@_@astro":"chunks/index@_@astro.f8f02922.mjs","@astrojs/vue/client.js":"_astro/client.a7e4cd41.js","astro:scripts/before-hydration.js":""},"assets":["/_astro/index.742d7cfe.css","/favicon.ico","/_astro/client.a7e4cd41.js"]}), {
+const _page0  = () => import('./chunks/index@_@astro.4f3e9f59.mjs');
+const _page1  = () => import('./chunks/calendario@_@astro.135b15b2.mjs');
+const _page2  = () => import('./chunks/servicos@_@astro.679025ba.mjs');
+const _page3  = () => import('./chunks/login@_@js.d78dbe74.mjs');const pageMap = new Map([["src/pages/index.astro", _page0],["src/pages/calendario.astro", _page1],["src/pages/servicos.astro", _page2],["src/pages/api/twitch/login.js", _page3]]);
+const _manifest = Object.assign(deserializeManifest({"adapterName":"@astrojs/vercel/serverless","routes":[{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"/_astro/calendario.1dd4c0f9.css"}],"routeData":{"route":"/","type":"page","pattern":"^\\/$","segments":[],"params":[],"component":"src/pages/index.astro","pathname":"/","prerender":false,"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"/_astro/calendario.1dd4c0f9.css"}],"routeData":{"route":"/calendario","type":"page","pattern":"^\\/calendario\\/?$","segments":[[{"content":"calendario","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/calendario.astro","pathname":"/calendario","prerender":false,"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[{"type":"external","src":"/_astro/calendario.1dd4c0f9.css"}],"routeData":{"route":"/servicos","type":"page","pattern":"^\\/servicos\\/?$","segments":[[{"content":"servicos","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/servicos.astro","pathname":"/servicos","prerender":false,"_meta":{"trailingSlash":"ignore"}}},{"file":"","links":[],"scripts":[],"styles":[],"routeData":{"route":"/api/twitch/login","type":"endpoint","pattern":"^\\/api\\/twitch\\/login$","segments":[[{"content":"api","dynamic":false,"spread":false}],[{"content":"twitch","dynamic":false,"spread":false}],[{"content":"login","dynamic":false,"spread":false}]],"params":[],"component":"src/pages/api/twitch/login.js","pathname":"/api/twitch/login","prerender":false,"_meta":{"trailingSlash":"ignore"}}}],"base":"/","compressHTML":false,"markdown":{"drafts":false,"syntaxHighlight":"shiki","shikiConfig":{"langs":[],"theme":"github-dark","wrap":false},"remarkPlugins":[],"rehypePlugins":[],"remarkRehype":{},"gfm":true,"smartypants":true},"componentMetadata":[["C:/Users/joaol/_git/_projetos/xduracel-git/src/pages/calendario.astro",{"propagation":"none","containsHead":true}],["C:/Users/joaol/_git/_projetos/xduracel-git/src/pages/index.astro",{"propagation":"none","containsHead":true}],["C:/Users/joaol/_git/_projetos/xduracel-git/src/pages/servicos.astro",{"propagation":"none","containsHead":true}]],"renderers":[],"clientDirectives":[["idle","(()=>{var i=t=>{let e=async()=>{await(await t())()};\"requestIdleCallback\"in window?window.requestIdleCallback(e):setTimeout(e,200)};(self.Astro||(self.Astro={})).idle=i;window.dispatchEvent(new Event(\"astro:idle\"));})();"],["load","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).load=e;window.dispatchEvent(new Event(\"astro:load\"));})();"],["media","(()=>{var s=(i,t)=>{let a=async()=>{await(await i())()};if(t.value){let e=matchMedia(t.value);e.matches?a():e.addEventListener(\"change\",a,{once:!0})}};(self.Astro||(self.Astro={})).media=s;window.dispatchEvent(new Event(\"astro:media\"));})();"],["only","(()=>{var e=async t=>{await(await t())()};(self.Astro||(self.Astro={})).only=e;window.dispatchEvent(new Event(\"astro:only\"));})();"],["visible","(()=>{var r=(i,c,n)=>{let s=async()=>{await(await i())()},t=new IntersectionObserver(e=>{for(let o of e)if(o.isIntersecting){t.disconnect(),s();break}});for(let e of n.children)t.observe(e)};(self.Astro||(self.Astro={})).visible=r;window.dispatchEvent(new Event(\"astro:visible\"));})();"]],"entryModules":{"\u0000@astrojs-ssr-virtual-entry":"_@astrojs-ssr-virtual-entry.mjs","\u0000@astro-renderers":"renderers.mjs","\u0000empty-middleware":"_empty-middleware.mjs","/src/pages/index.astro":"chunks/pages/index.astro.db487a02.mjs","/src/pages/api/twitch/login.js":"chunks/pages/login.js.7be22079.mjs","/src/pages/servicos.astro":"chunks/pages/servicos.astro.25ca4aeb.mjs","\u0000@astro-page:src/pages/index@_@astro":"chunks/index@_@astro.4f3e9f59.mjs","\u0000@astro-page:src/pages/calendario@_@astro":"chunks/calendario@_@astro.135b15b2.mjs","\u0000@astro-page:src/pages/servicos@_@astro":"chunks/servicos@_@astro.679025ba.mjs","\u0000@astro-page:src/pages/api/twitch/login@_@js":"chunks/login@_@js.d78dbe74.mjs","C:/Users/joaol/_git/_projetos/xduracel-git/src/components/Medias.vue":"_astro/Medias.76a81f04.js","C:/Users/joaol/_git/_projetos/xduracel-git/src/components/Twitch.vue":"_astro/Twitch.1e523c46.js","@astrojs/vue/client.js":"_astro/client.07a81c91.js","astro:scripts/before-hydration.js":""},"assets":["/_astro/calendario.1dd4c0f9.css","/background.jpg","/boneco.png","/favicon.ico","/favicon.jpg","/favicon.png","/full_boneco.png","/logo.png","/persona.png","/icons/icon-128x128.png","/icons/icon-144x144.png","/icons/icon-152x152.png","/icons/icon-192x192.png","/icons/icon-384x384.png","/icons/icon-512x512.png","/icons/icon-72x72.png","/icons/icon-96x96.png","/icons/icon-calendar.png","/icons/icon-facebook.png","/icons/icon-instagram.png","/icons/icon-livepix.png","/icons/icon-services.png","/icons/icon-twitch.png","/icons/icon-twitter.png","/icons/icon-whatsapp.png","/icons/icon-youtube.png","/_astro/client.07a81c91.js","/_astro/Medias.76a81f04.js","/_astro/runtime-core.esm-bundler.7355e4fd.js","/_astro/Twitch.1e523c46.js","/_astro/_plugin-vue_export-helper.c27b6911.js"]}), {
 	pageMap,
 	renderers,
 });

@@ -56,5 +56,10 @@ const menuItens = ref([
     desc: "Serviços",
     link: "/servicos",
   },
+  {
+    tipo: "links",
+    desc: "Links úteis",
+    link: "/links",
+  },
 ]);
 </script>
