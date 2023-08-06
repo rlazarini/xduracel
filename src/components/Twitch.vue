@@ -63,46 +63,17 @@
     </div>
   </div>
 </template>
-
-<script setup>
+  
+  <script setup>
 import { onMounted, ref } from "vue";
 const playerStatus = ref(false);
-const {
-  VITE_CLIENT_ID: clientid,
-  VITE_CLIENT_SECRET: clientsct,
-  VITE_TWITCH_OAUTH: oauth,
-  VITE_HELIX: helix,
-} = import.meta.env;
-const getAuth = () => {
-  return fetch(oauth, {
-    method: "POST",
-    headers: {
-      ["Content-Type"]: "application/json",
-    },
-    body: JSON.stringify({
-      client_id: `${clientid}`,
-      client_secret: `${clientsct}`,
-      grant_type: "client_credentials",
-    }),
-  })
+const getLiveStatus = async () => {
+  const data = await fetch("/api/twitch/login")
     .then((res) => res.json())
     .then((data) => {
       return data;
     });
-};
-const getLiveStatus = async () => {
-  const { access_token } = await getAuth();
-  return fetch(`${helix}/streams?user_login=xduracel`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${access_token}`,
-      ["Client-Id"]: `${clientid}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      return data.data.length ? data.data[0] : false;
-    });
+  return data;
 };
 const isStatus = async () => {
   playerStatus.value = (await getLiveStatus()) || false;
@@ -111,28 +82,4 @@ onMounted(async () => {
   isStatus();
   setInterval(isStatus, 1800000);
 });
-</script>
-
-<style scoped>
-@keyframes pulse {
-  0% {
-    background-position: 30% 30%;
-  }
-  50% {
-    background-position: 250% 250%;
-  }
-  100% {
-    background-position: 30% 30%;
-  }
-}
-.twitch {
-  border: 1px solid rgba(128, 0, 213, 0.5);
-  background: radial-gradient(
-    circle,
-    rgba(221, 146, 255, 1) 20%,
-    rgba(128, 0, 213, 1) 100%
-  );
-  background-size: 250% 250%;
-  animation: pulse 12s ease-in-out infinite alternate;
-}
-</style>
+</script>  

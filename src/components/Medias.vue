@@ -8,33 +8,17 @@
       :key="`${sm.tipo}_${index}`"
       class="py-4"
     >
-      <template v-if="sm.self">
-        <router-link
-          :to="sm.link"
-          class="flex flex-col items-center justify-center"
+      <a
+        :href="sm.link"
+        class="flex flex-col items-center justify-center"
+      >
+        <img
+          :src="`/icons/icon-${sm.tipo}.png`"
+          alt=""
+          class="max-w-[38px] portrait:max-w-[32px]"
         >
-          <img
-            :src="`/icons/icon-${sm.tipo}.png`"
-            alt=""
-            class="max-w-[38px] portrait:max-w-[32px]"
-          >
-          <span class="text-sm portrait:text-xs portrait:font-bold">{{ sm.desc }}</span>
-        </router-link>
-      </template>
-      <template v-else>
-        <a
-          :href="sm.link"
-          :target="(sm.self ? '_self' : '_blank')"
-          class="flex flex-col items-center justify-center"
-        >
-          <img
-            :src="`/icons/icon-${sm.tipo}.png`"
-            alt=""
-            class="max-w-[38px] portrait:max-w-[32px]"
-          >
-          <span class="text-sm portrait:text-xs portrait:font-bold">{{ sm.desc }}</span>
-        </a>
-      </template>
+        <span class="text-sm portrait:text-xs portrait:font-bold">{{ sm.desc }}</span>
+      </a>
     </li>
   </ul>
 </template>
@@ -65,14 +49,12 @@ const menuItens = ref([
   {
     tipo: "calendar",
     desc: "Agenda",
-    link: "/calendar",
-    self: true,
+    link: "/calendario",
   },
   {
     tipo: "services",
     desc: "Serviços",
-    link: "/services",
-    self: true,
+    link: "/servicos",
   },
 ]);
 </script>
