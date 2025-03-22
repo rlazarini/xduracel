@@ -9,6 +9,7 @@ const {
   VITE_GOOGLE_PROJECT_CLIENT_ID: client_id,
 } = import.meta.env;
 
+
 export const get = async ({ request, cookies }) => {
   const credentials = {
     "type": "service_account",
