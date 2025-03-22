@@ -8,6 +8,7 @@
       <a
         :href="link.link"
         target="_blank"
+        class="inline-block"
       >
         <h4 class="text-lg text-yellow-200">{{ link.name }}</h4>
         <p>{{ link.desc }}</p>
@@ -19,6 +20,11 @@
 <script setup>
 import { ref } from "vue";
 const linksUteis = ref([
+  {
+    link: "https://summonerswar.fandom.com/wiki/Summoners_War:_Sky_Arena_Wiki",
+    name: "Summoners War Wiki",
+    desc: "",
+  },
   {
     link: "https://preview.redd.it/p22e704rpvs61.jpg?width=2478&format=pjpg&auto=webp&s=1d7b11f2753dc5c7496477e248fd69894feb0de7",
     name: "Tabela do Tricaru",
@@ -33,11 +39,6 @@ const linksUteis = ref([
     link: "https://swgt.io/where2use/",
     name: "SW Guild Tools",
     desc: "Defesas de Guildas por monstro",
-  },
-  {
-    link: "https://summonerswar.fandom.com/wiki/Summoners_War:_Sky_Arena_Wiki",
-    name: "Summoners War Wiki",
-    desc: "",
   },
   {
     link: "https://swq.jp/l/en-US/",
