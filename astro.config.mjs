@@ -8,8 +8,15 @@ export default defineConfig({
   adapter: vercelServerless(),
   integrations: [
     vue({
-      appEntrypoint: "/src/main.js"
+      appEntrypoint: "/src/main.js",
     }),
     tailwind()
   ],
+  vite: {
+    server: {
+      watch: {
+        usePolling: true,
+      }
+    }
+  },
 });
