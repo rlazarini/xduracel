@@ -33,7 +33,7 @@
       <div class="brackets">
         <div
           v-for="(index, num) in Object.keys(listaJogos).length"
-          :class="`backets-${index} flex space-between`"
+          :class="`w-full backets-${index} flex space-between`"
           :key="`brackets_${num}`"
         >
           <div
@@ -156,6 +156,18 @@ onMounted(() => {
     }
     &.w-\[12\%\] {
       width: 12.5%;
+    }
+    &.w-\[25\%\] {
+      width: 25%;
+    }
+    &.w-\[50\%\] {
+      width: 50%;
+    }
+    &.w-\[75\%\] {
+      width: 75%;
+    }
+    &.w-\[100\%\] {
+      width: 100%;
     }
     &:after {
       content: "";
