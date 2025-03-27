@@ -1,11 +1,5 @@
 module.exports = {
-  darkMode: "media",
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-}
+    content: [
+      "./src/**/*.{astro,html,js,jsx,svelte,ts,tsx,vue}",
+    ],
+  }

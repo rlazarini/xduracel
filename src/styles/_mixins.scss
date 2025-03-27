@@ -1,0 +1,17 @@
+@mixin mediaquery ($breakpoint) {
+  @if $breakpoint==smartphone {
+    @media (orientation: portrait) {
+      @content;
+    }
+  }
+  @if $breakpoint==landscape {
+    @media only screen and (max-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+      @content;
+    }
+  }
+  @if $breakpoint==ipad {
+    @media only screen and (min-width: 1024px) and (max-height: 1366px) and (-webkit-min-device-pixel-ratio: 2) {
+      @content;
+    }
+  }
+}
