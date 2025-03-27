@@ -10,6 +10,7 @@
     >
       <a
         :href="sm.link"
+        :target="sm.target"
         class="flex flex-col items-center justify-center"
       >
         <img
@@ -30,36 +31,49 @@ const menuItens = ref([
     tipo: "instagram",
     desc: "Instagram",
     link: "https://www.instagram.com/duracelgaming/",
+    target: "_blank",
   },
   {
     tipo: "youtube",
     desc: "xDuracel",
     link: "https://www.youtube.com/@xDuracelx",
+    target: "_blank",
   },
   {
     tipo: "youtube",
     desc: "xDuracelx",
     link: "https://www.youtube.com/@xDuracelx1",
+    target: "_blank",
   },
   {
     tipo: "livepix",
     desc: "Livepix",
     link: "https://livepix.gg/xduracel",
+    target: "_blank",
   },
   {
     tipo: "calendar",
     desc: "Agenda",
     link: "/calendario",
+    target: "_self",
   },
   {
     tipo: "services",
     desc: "Serviços",
     link: "/servicos",
+    target: "_self",
   },
   {
     tipo: "links",
     desc: "Links úteis",
     link: "/links",
+    target: "_self",
+  },
+  {
+    tipo: "links",
+    desc: "Copinha SW",
+    link: "/copinha",
+    target: "_self",
   },
 ]);
 </script>
