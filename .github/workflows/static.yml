@@ -44,6 +44,11 @@ jobs:
           VITE_CLIENT_SECRET: ${{ secrets.VITE_CLIENT_SECRET }}
           VITE_TWITCH_OAUTH: ${{ secrets.VITE_TWITCH_OAUTH }}
           VITE_HELIX: ${{ secrets.VITE_HELIX }}
+          VITE_GOOGLE_PROJECT_KEY: ${{secrets.VITE_GOOGLE_PROJECT_KEY}}
+          VITE_GOOGLE_PROJECT_KEY_ID: ${{secrets.VITE_GOOGLE_PROJECT_KEY_ID}}
+          VITE_GOOGLE_PROJECT_PRIVATE_KEY: ${{secrets.VITE_GOOGLE_PROJECT_PRIVATE_KEY}}
+          VITE_GOOGLE_PROJECT_CLIENT: ${{secrets.VITE_GOOGLE_PROJECT_CLIENT}}
+          VITE_GOOGLE_PROJECT_CLIENT_ID: ${{secrets.VITE_GOOGLE_PROJECT_CLIENT_ID}}
       - name: Setup Pages
         uses: actions/configure-pages@v3
       - name: Upload artifact
