@@ -64,7 +64,7 @@
   </div>
 </template>
   
-  <script setup>
+<script setup>
 import { onMounted, ref } from "vue";
 const playerStatus = ref(false);
 const getLiveStatus = async () => {

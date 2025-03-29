@@ -2,14 +2,14 @@
   <div class="w-full flex justify-between pb-5">
     <h2 class="text-2xl text-white font-bold font-border">Copinha SW</h2>
     <button
-      v-if="$chosenPlayers.length > 0"
+      v-if="chosenPlayers.length > 0"
       @click="limparJogares"
       class="relative h-12 overflow-hidden rounded border border-neutral-200 bg-neutral-950 px-5 py-2.5 text-white transition-all duration-300 hover:bg-neutral-800 hover:ring-2 hover:ring-neutral-800 hover:ring-offset-2"
     >
       <span class="relative">Limpar todos Jogadores</span>
     </button>
   </div>
-  <template v-if="$chosenPlayers.length < 1">
+  <template v-if="chosenPlayers.length < 1">
     <div class="flex w-full">
       <input
         v-model="nomesBatalha"
@@ -28,7 +28,7 @@
     </div>
   </template>
   <template v-else>
-    Jogadores da batalha: {{$chosenPlayers.join(', ')}}<br>Total: {{$chosenPlayers.length}}
+    Jogadores da batalha: {{chosenPlayers.join(', ')}}<br>Total: {{chosenPlayers.length}}
     <template v-if="true">
       <div class="brackets">
         <div
@@ -38,15 +38,15 @@
         >
           <div
             v-for="(indexFormacao, index_f) in listaJogos[`linha_${num}`]"
-            :class="`formacaoJogadores relative w-[${Math.floor(100 / Math.pow(2,Math.log($chosenPlayers.length)/Math.log(2) - index))}%]`"
+            :class="`formacaoJogadores relative w-[${Math.floor(100 / Math.pow(2,Math.log(chosenPlayers.length)/Math.log(2) - index))}%]`"
             :key="`linha_jogos_${index_f}`"
           >
             <div
-              class="bg-gradient-to-r from-stone-500 to-yellow-700 mx-2 py-1 px-2 cursor-pointer hover:bg-gradient-to-r hover:from-stone-600 hover:to-yellow-800"
+              class="bg-gradient-to-r rounded-t-lg from-stone-500 to-yellow-700 mx-2 py-1 px-2 cursor-pointer hover:bg-gradient-to-r hover:from-stone-600 hover:to-yellow-800"
               :class="{'ml-0': index_f === 0, 'mr-0': index_f === listaJogos[`linha_${num}`].length - 1}"
             >ver regra</div>
             <div
-              class="grid grid-rows-1 col-span-2 bg-gray-400 text-ellipsis overflow-hidden mx-2"
+              class="grid grid-rows-1 rounded-b-lg col-span-2 bg-gray-400 text-ellipsis overflow-hidden mx-2"
               :class="{'ml-0': index_f === 0, 'mr-0': index_f === listaJogos[`linha_${num}`].length - 1}"
             >
               <span
@@ -67,8 +67,9 @@
 
 <script setup>
 import {
-  chosenPlayers,
+  $chosenPlayers,
   updateChosenPlayers,
+  getRegras,
 } from "/src/store/copinha/regras.js";
 import { useStore } from "@nanostores/vue";
 import { sortArray } from "/src/utils/index.js";
@@ -77,13 +78,13 @@ import { ref, watch, computed, onMounted } from "vue";
 const nomesBatalha = ref("");
 const gerarBatalhaButton = ref(true);
 const listaJogos = ref({});
-const $chosenPlayers = useStore(chosenPlayers);
+const chosenPlayers = useStore($chosenPlayers);
 
 const gerarBatalha = () => {
   const jogadores =
     nomesBatalha.value.length > 0
       ? nomesBatalha.value?.split(",").filter((n) => n.trim())
-      : $chosenPlayers.value;
+      : chosenPlayers.value;
 
   if (jogadores.length === 0) {
     return false;
@@ -136,6 +137,7 @@ watch(nomesBatalha, () => {
     nomesBatalha.value.split(",").filter((n) => n.trim()).length <= 1;
 });
 onMounted(() => {
+  getRegras();
   updateChosenPlayers();
   gerarBatalha();
 });

@@ -49,6 +49,7 @@ jobs:
           VITE_GOOGLE_PROJECT_PRIVATE_KEY: ${{ secrets.VITE_GOOGLE_PROJECT_PRIVATE_KEY }}
           VITE_GOOGLE_PROJECT_CLIENT: ${{ secrets.VITE_GOOGLE_PROJECT_CLIENT }}
           VITE_GOOGLE_PROJECT_CLIENT_ID: ${{ secrets.VITE_GOOGLE_PROJECT_CLIENT_ID }}
+          VITE_RESTDB_XDURACEL_API_KEY: ${{ secrets.VITE_RESTDB_XDURACEL_API_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact

@@ -17,8 +17,8 @@ import Twitch from "../components/Twitch.vue";
     <title>{title}</title>
   </head>
   <body>
-    <Twitch client:load />
-    <Header />
+    <Twitch client:visible />
+    <Header client:visible />
     <slot />
   </body>
 </html>
