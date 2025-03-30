@@ -4,6 +4,7 @@ const $chosenPlayers = atom([]);
 const $listaRegras = map({
   regras: []
 });
+const $regraEscolhida = atom({});
 
 function updateChosenPlayers(isPlayer) {
   if (!window.localStorage.getItem('chosenPlayers')) {
@@ -14,7 +15,6 @@ function updateChosenPlayers(isPlayer) {
     $chosenPlayers.set(isPlayer)
     window.localStorage.setItem('chosenPlayers', JSON.stringify(isPlayer));
   }
-  console.log("update jogador :: ", $chosenPlayers.get())
 }
 
 async function getRegras() {
@@ -24,12 +24,17 @@ async function getRegras() {
     return data;
   });
   $listaRegras.setKey("regras", regrasCopinha)
-  console.log("Inserir no store :: ", $listaRegras.get()["regras"])
+}
+
+function setRegra(regra) {
+  $regraEscolhida.set(regra);
 }
 
 export {
   $chosenPlayers,
   $listaRegras,
+  $regraEscolhida,
   updateChosenPlayers,
-  getRegras
+  getRegras,
+  setRegra
 }

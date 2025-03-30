@@ -28,12 +28,21 @@
     </div>
   </template>
   <template v-else>
-    Jogadores da batalha: {{chosenPlayers.join(', ')}}<br>Total: {{chosenPlayers.length}}
+    Participantes:
+    <span
+      v-for="(jogador, index) in chosenPlayers"
+      class="inline-block rounded-full text-xs font-bold text-white bg-red-500 py-1 px-2 ml-3"
+      :class="{'!ml-0': index === 0}"
+      :key="`jog_${index}`"
+    >
+      {{jogador}}
+    </span><br>
+    Total: {{chosenPlayers.length}}
     <template v-if="true">
       <div class="brackets">
         <div
           v-for="(index, num) in Object.keys(listaJogos).length"
-          :class="`w-full backets-${index} flex space-between`"
+          :class="`w-full backets-${index} flex space-between ${index === Object.keys(listaJogos).length ? 'ultima_disputa' : ''}`"
           :key="`brackets_${num}`"
         >
           <div
@@ -44,40 +53,108 @@
             <div
               class="bg-gradient-to-r rounded-t-lg from-stone-500 to-yellow-700 mx-2 py-1 px-2 cursor-pointer hover:bg-gradient-to-r hover:from-stone-600 hover:to-yellow-800"
               :class="{'ml-0': index_f === 0, 'mr-0': index_f === listaJogos[`linha_${num}`].length - 1}"
+              @click="exibeRegra(indexFormacao['regra'])"
             >ver regra</div>
             <div
-              class="grid grid-rows-1 rounded-b-lg col-span-2 bg-gray-400 text-ellipsis overflow-hidden mx-2"
+              class="grid grid-rows-1 rounded-b-lg col-span-2 text-ellipsis overflow-hidden mx-2 bg-gradient-to-r from-gray-200 to-gray-400 text-black"
               :class="{'ml-0': index_f === 0, 'mr-0': index_f === listaJogos[`linha_${num}`].length - 1}"
             >
-              <span
-                class="inline-flex py-1 px-2 items-center"
+              <div
+                class="nomeJogador transition-all relative inline-flex p-2 items-center min-h-[40px]"
                 :title="indexFormacao['jogador_1']"
-              >{{indexFormacao['jogador_1']}}</span>
-              <span
-                class="inline-flex py-1 px-2 items-center border-t"
+              >
+                {{indexFormacao['jogador_1']}}
+                <div
+                  class="acaoJogador absolute transition-all flex gap-2 -right-32"
+                  v-if="indexFormacao['jogador_1'].length > 0 && indexFormacao['jogador_2'].length > 0"
+                >
+                  <button
+                    class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner"
+                    @click="escolheVencedor({
+                      posicao: num,
+                      bloco: index_f,
+                      linha: listaJogos[`linha_${num}`][index_f],
+                      vencedor: 'jogador_1'
+                    })"
+                  >
+                    <Icon
+                      class="drop-shadow"
+                      icon="material-symbols:trophy"
+                      color="#fff"
+                    />
+                  </button>
+                  <!-- <button class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner">
+                    <Icon
+                      class="drop-shadow"
+                      icon="material-symbols:trophy"
+                      color="#fff"
+                    />
+                  </button> -->
+                </div>
+              </div>
+              <div
+                class="nomeJogador transition-all relative inline-flex p-2 items-center min-h-[40px] border-t-2 border-orange-600"
                 :title="indexFormacao['jogador_2']"
-              >{{indexFormacao['jogador_2']}}</span>
+              >
+                {{indexFormacao['jogador_2']}}
+                <div
+                  class="acaoJogador absolute transition-all flex gap-2 -right-32"
+                  v-if="indexFormacao['jogador_1'].length > 0 && indexFormacao['jogador_2'].length > 0"
+                >
+                  <button
+                    class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner"
+                    @click="escolheVencedor({
+                      posicao: num,
+                      bloco: index_f,
+                      linha: listaJogos[`linha_${num}`][index_f],
+                      vencedor: 'jogador_2'
+                    })"
+                  >
+                    <Icon
+                      class="drop-shadow"
+                      icon="material-symbols:trophy"
+                      color="#fff"
+                    />
+                  </button>
+                  <!-- <button class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner">
+                    <Icon
+                      class="drop-shadow"
+                      icon="material-symbols:trophy"
+                      color="#fff"
+                    />
+                  </button> -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
+      </div>
+      <div v-if="jogadorCampeao.length > 0">
+        O vencedor foi: {{jogadorCampeao}}
       </div>
     </template>
   </template>
 </template>
 
 <script setup>
+import { Icon } from "@iconify/vue";
 import {
+  $listaRegras,
   $chosenPlayers,
   updateChosenPlayers,
   getRegras,
+  setRegra,
 } from "/src/store/copinha/regras.js";
 import { useStore } from "@nanostores/vue";
-import { sortArray } from "/src/utils/index.js";
+import { sortArray, randomNumber } from "/src/utils/index.js";
 import { ref, watch, computed, onMounted } from "vue";
 
 const nomesBatalha = ref("");
 const gerarBatalhaButton = ref(true);
 const listaJogos = ref({});
+const regrasUsadas = ref([]);
+const jogadorCampeao = ref("");
+const listaRegras = useStore($listaRegras);
 const chosenPlayers = useStore($chosenPlayers);
 
 const gerarBatalha = () => {
@@ -113,7 +190,7 @@ const gerarBatalha = () => {
       listaJogos.value[`linha_${i}`][j] = {
         jogador_1: "",
         jogador_2: "",
-        regra: "",
+        regra: gerarRegra(),
       };
     }
     lista = lista / 2;
@@ -122,10 +199,28 @@ const gerarBatalha = () => {
     listaJogos.value["linha_0"][i] = {
       jogador_1: sortJogadores[posicao],
       jogador_2: sortJogadores[posicao + 1],
-      regra: "",
+      regra: gerarRegra(),
     };
     posicao = posicao + 2;
   }
+};
+const exibeRegra = (regra) => {
+  setRegra(regra);
+};
+const escolheVencedor = ({ posicao, bloco, linha, vencedor }) => {
+  if (listaJogos.value[`linha_${posicao + 1}`]) {
+    listaJogos.value[`linha_${posicao + 1}`][Math.floor(bloco / 2)][
+      `jogador_${(bloco % 2) + 1}`
+    ] = linha[vencedor];
+  } else {
+    jogadorCampeao.value = linha[vencedor];
+  }
+};
+const gerarRegra = () => {
+  const regraEscolhida = regrasUsadas.value.at(
+    randomNumber(0, regrasUsadas.value.length)
+  );
+  return regraEscolhida;
 };
 const limparJogares = () => {
   const jogadores = [];
@@ -136,8 +231,9 @@ watch(nomesBatalha, () => {
   gerarBatalhaButton.value =
     nomesBatalha.value.split(",").filter((n) => n.trim()).length <= 1;
 });
-onMounted(() => {
-  getRegras();
+onMounted(async () => {
+  await getRegras();
+  regrasUsadas.value = sortArray(listaRegras.value.regras);
   updateChosenPlayers();
   gerarBatalha();
 });
@@ -153,9 +249,6 @@ onMounted(() => {
   .formacaoJogadores {
     margin-top: 22px;
     text-align: left;
-    span {
-      min-height: 40px;
-    }
     &.w-\[12\%\] {
       width: 12.5%;
     }
@@ -188,6 +281,21 @@ onMounted(() => {
       left: calc(50% - 2px);
       position: absolute;
       background-color: #ccc;
+    }
+    .nomeJogador {
+      &:hover {
+        .acaoJogador {
+          right: 6px;
+        }
+      }
+    }
+  }
+  .ultima_disputa {
+    .formacaoJogadores {
+      &:after {
+        content: "";
+        display: none;
+      }
     }
   }
 }

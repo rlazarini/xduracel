@@ -6,7 +6,7 @@
     >
       <img
         src="/logo.png"
-        class="logo-site max-h-40 mt-4 portrait:mt-2 portrait:max-w-[75vw] portrait:max-h-[13vh]"
+        class="logo-site max-h-32 mt-4 portrait:mt-2 portrait:max-w-[75vw] portrait:max-h-[13vh]"
       >
     </a>
   </div>

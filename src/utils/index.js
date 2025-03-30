@@ -3,3 +3,7 @@ export function sortArray(array) {
     .sort((a, b) => a.sort - b.sort)
     .map((a) => a.value);
 }
+
+export function randomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
