@@ -31,7 +31,7 @@
     Participantes:
     <span
       v-for="(jogador, index) in chosenPlayers"
-      class="inline-block rounded-full text-xs font-bold text-white bg-red-500 py-1 px-2 ml-3"
+      class="inline-block rounded-full text-xs font-bold text-white bg-gradient-to-r bg-cyan-700 bg-cyan-900 py-2 px-3 ml-3 mb-2"
       :class="{'!ml-0': index === 0}"
       :key="`jog_${index}`"
     >
@@ -53,14 +53,14 @@
             <div
               class="bg-gradient-to-r rounded-t-lg from-stone-500 to-yellow-700 mx-2 py-1 px-2 cursor-pointer hover:bg-gradient-to-r hover:from-stone-600 hover:to-yellow-800"
               :class="{'ml-0': index_f === 0, 'mr-0': index_f === listaJogos[`linha_${num}`].length - 1}"
-              @click="exibeRegra(indexFormacao['regra'])"
+              @click="exibeRegra(indexFormacao['regra'], indexFormacao['jogador_1'], indexFormacao['jogador_2'])"
             >ver regra</div>
             <div
-              class="grid grid-rows-1 rounded-b-lg col-span-2 text-ellipsis overflow-hidden mx-2 bg-gradient-to-r from-gray-200 to-gray-400 text-black"
+              class="relative grid grid-rows-1 rounded-b-lg col-span-2 text-ellipsis overflow-hidden mx-2 bg-gradient-to-r from-gray-200 to-gray-400 text-black"
               :class="{'ml-0': index_f === 0, 'mr-0': index_f === listaJogos[`linha_${num}`].length - 1}"
             >
               <div
-                class="nomeJogador transition-all relative inline-flex p-2 items-center min-h-[40px]"
+                class="nomeJogador transition-all inline-flex p-2 items-center min-h-[40px]"
                 :title="indexFormacao['jogador_1']"
               >
                 {{indexFormacao['jogador_1']}}
@@ -93,7 +93,7 @@
                 </div>
               </div>
               <div
-                class="nomeJogador transition-all relative inline-flex p-2 items-center min-h-[40px] border-t-2 border-orange-600"
+                class="nomeJogador transition-all inline-flex p-2 items-center min-h-[40px] border-t-2 border-orange-600"
                 :title="indexFormacao['jogador_2']"
               >
                 {{indexFormacao['jogador_2']}}
@@ -146,7 +146,14 @@ import {
   setRegra,
 } from "/src/store/copinha/regras.js";
 import { useStore } from "@nanostores/vue";
-import { sortArray, randomNumber } from "/src/utils/index.js";
+import {
+  sortArray,
+  randomNumber,
+  alfabeto,
+  elementos,
+  buffs,
+  debuffs,
+} from "/src/utils/index.js";
 import { ref, watch, computed, onMounted } from "vue";
 
 const nomesBatalha = ref("");
@@ -154,6 +161,17 @@ const gerarBatalhaButton = ref(true);
 const listaJogos = ref({});
 const regrasUsadas = ref([]);
 const jogadorCampeao = ref("");
+const regraEspecialTipo = ref([
+  "nova_regra",
+  "elemento",
+  "numero",
+  "alfabeto",
+  "buff_debuff",
+  "debuff",
+  "nova_luta",
+]);
+// "mob_favorito",
+
 const listaRegras = useStore($listaRegras);
 const chosenPlayers = useStore($chosenPlayers);
 
@@ -204,8 +222,8 @@ const gerarBatalha = () => {
     posicao = posicao + 2;
   }
 };
-const exibeRegra = (regra) => {
-  setRegra(regra);
+const exibeRegra = (regra, j1, j2) => {
+  setRegra({ ...regra, jogador_1: j1, jogador_2: j2 });
 };
 const escolheVencedor = ({ posicao, bloco, linha, vencedor }) => {
   if (listaJogos.value[`linha_${posicao + 1}`]) {
@@ -217,14 +235,113 @@ const escolheVencedor = ({ posicao, bloco, linha, vencedor }) => {
   }
 };
 const gerarRegra = () => {
-  const regraEscolhida = regrasUsadas.value.at(
-    randomNumber(0, regrasUsadas.value.length)
+  const randomRegra = regrasUsadas.value.at(
+    randomNumber(0, regrasUsadas.value.length - 1)
   );
+  const regraEscolhida = JSON.parse(JSON.stringify(randomRegra));
+  if (
+    regraEscolhida?.regra_especial &&
+    regraEspecialTipo.value.includes(
+      regraEscolhida?.regra_especial_tipo?.tipo || ""
+    )
+  ) {
+    switch (regraEscolhida?.regra_especial_tipo?.tipo) {
+      case "nova_regra":
+        // console.log("NOVA REGRA");
+        break;
+      case "elemento":
+        const sortElemento = sortArray(elementos);
+        const formatoElm =
+          regraEscolhida?.regra_especial_tipo?.formato || false;
+        const quantidadeElm =
+          regraEscolhida?.regra_especial_tipo?.quantidade || false;
+        regraEscolhida["modelo"] = [];
+        if (formatoElm) {
+          formatoElm.forEach((posicao, index) => {
+            for (let i = 0; i < posicao; i++) {
+              const posicaoElemento = randomNumber(0, sortElemento.length - 1);
+              regraEscolhida["modelo"].push({
+                jogador: `jogador_${index + 1}`,
+                elemento: sortElemento[posicaoElemento],
+              });
+              sortElemento.splice(posicaoElemento, 1);
+            }
+          });
+        } else if (quantidadeElm) {
+          for (let i = 0; i < quantidadeElm; i++) {
+            const posicaoElemento = randomNumber(0, sortElemento.length - 1);
+            regraEscolhida["modelo"].push({
+              elemento: sortElemento[posicaoElemento],
+            });
+          }
+        }
+        break;
+      case "numero":
+        regraEscolhida["modelo"] = randomNumber(
+          regraEscolhida?.regra_especial_tipo?.limite[0],
+          regraEscolhida?.regra_especial_tipo?.limite[1]
+        );
+        break;
+      case "alfabeto":
+        regraEscolhida["modelo"] = [];
+        const sortAlfabeto = sortArray(alfabeto);
+        const quantidadeAlf = regraEscolhida?.regra_especial_tipo?.quantidade;
+        for (let i = 0; i < quantidadeAlf; i++) {
+          const posicaoAlfabeto = randomNumber(0, sortAlfabeto.length - 1);
+          regraEscolhida["modelo"].push(sortAlfabeto[posicaoAlfabeto]);
+          sortAlfabeto.splice(posicaoAlfabeto, 1);
+        }
+        break;
+      // case "mob_favorito":
+      //   console.log("REGRA Mob Favorito");
+      //   break;
+      case "buff_debuff":
+      case "debuff":
+        const sortBuff = sortArray(buffs.filter((a) => a.active));
+        const sortDebuff = sortArray(debuffs.filter((a) => a.active));
+        const formatoBuff =
+          regraEscolhida?.regra_especial_tipo?.formato || false;
+        const quantidadeBuff =
+          regraEscolhida?.regra_especial_tipo?.quantidade || false;
+        regraEscolhida["modelo"] = [];
+        if (formatoBuff) {
+          formatoBuff.forEach((posicao, index) => {
+            for (let i = 0; i < posicao; i++) {
+              const posicaoBuff = randomNumber(0, sortBuff.length - 1);
+              const posicaoDebuff = randomNumber(0, sortDebuff.length - 1);
+              regraEscolhida["modelo"].push({
+                jogador: `jogador_${index + 1}`,
+                buff: sortBuff[posicaoBuff],
+                debuff: sortDebuff[posicaoDebuff],
+              });
+              sortBuff.splice(posicaoBuff, 1);
+              sortDebuff.splice(posicaoDebuff, 1);
+            }
+          });
+        } else if (quantidadeBuff) {
+          for (let i = 0; i < quantidadeBuff; i++) {
+            const posicaoBuff = randomNumber(0, sortBuff.length - 1);
+            const posicaoDebuff = randomNumber(0, sortDebuff.length - 1);
+            regraEscolhida["modelo"].push({
+              buff: sortBuff[posicaoBuff],
+              debuff: sortDebuff[posicaoDebuff],
+            });
+          }
+        }
+        break;
+      case "nova_luta":
+        // console.log("REGRA de uma nova luta");
+        break;
+      default:
+      // console.log("nenhuma regra");
+    }
+  }
   return regraEscolhida;
 };
 const limparJogares = () => {
   const jogadores = [];
   listaJogos.value = {};
+  setRegra({});
   updateChosenPlayers(jogadores);
 };
 watch(nomesBatalha, () => {

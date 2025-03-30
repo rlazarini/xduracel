@@ -1,7 +1,7 @@
 <template>
   <div
-    class="w-auto fixed top-6 left-6 border border-indigo-600 bg-indigo-200 p-2 hidden lg:block 2xl:px-4"
-    :class="{'!p-1 bg-gray-100 border-0': !playerStatus}"
+    class="w-auto fixed top-6 left-6 rounded border border-indigo-600 bg-indigo-200 p-2 hidden lg:block 2xl:px-4"
+    :class="{'!p-2 bg-gray-100 border-0': !playerStatus}"
   >
     <a
       :href="`https://www.twitch.tv/xduracel`"
@@ -15,7 +15,7 @@
         <img
           src="/icons/icon-twitch.png"
           class="w-8 mt-px ml-px"
-          :class="{'w-6 grayscale': !playerStatus}"
+          :class="{'w-5 grayscale': !playerStatus}"
         >
       </div>
       <div
