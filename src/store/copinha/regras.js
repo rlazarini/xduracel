@@ -1,6 +1,7 @@
 import { atom, map } from 'nanostores';
 
 const $chosenPlayers = atom([]);
+const $vencedor = atom("");
 const $listaRegras = map({
   regras: []
 });
@@ -30,11 +31,17 @@ function setRegra(regra) {
   $regraEscolhida.set(regra);
 }
 
+function setVencedor(winner) {
+  $vencedor.set(winner);
+}
+
 export {
   $chosenPlayers,
   $listaRegras,
   $regraEscolhida,
+  $vencedor,
   updateChosenPlayers,
   getRegras,
-  setRegra
+  setRegra,
+  setVencedor
 }

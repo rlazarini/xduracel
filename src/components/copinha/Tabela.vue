@@ -60,8 +60,16 @@
               :class="{'ml-0': index_f === 0, 'mr-0': index_f === listaJogos[`linha_${num}`].length - 1}"
             >
               <div
-                class="nomeJogador transition-all inline-flex p-2 items-center min-h-[40px]"
+                class="nomeJogador transition-all inline-flex p-2 items-center min-h-[50px]"
                 :title="indexFormacao['jogador_1']"
+                @click="indexFormacao['jogador_1'].length > 0 &&
+                  indexFormacao['jogador_2'].length > 0 &&
+                  escolheVencedor({
+                    posicao: num,
+                    bloco: index_f,
+                    linha: listaJogos[`linha_${num}`][index_f],
+                    vencedor: 'jogador_1'
+                  })"
               >
                 {{indexFormacao['jogador_1']}}
                 <div
@@ -69,7 +77,7 @@
                   v-if="indexFormacao['jogador_1'].length > 0 && indexFormacao['jogador_2'].length > 0"
                 >
                   <button
-                    class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner"
+                    class="flex items-center justify-center w-[32px] h-[32px] rounded bg-green-400 shadow-inner"
                     @click="escolheVencedor({
                       posicao: num,
                       bloco: index_f,
@@ -79,22 +87,24 @@
                   >
                     <Icon
                       class="drop-shadow"
+                      height="28"
                       icon="material-symbols:trophy"
                       color="#fff"
                     />
                   </button>
-                  <!-- <button class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner">
-                    <Icon
-                      class="drop-shadow"
-                      icon="material-symbols:trophy"
-                      color="#fff"
-                    />
-                  </button> -->
                 </div>
               </div>
               <div
-                class="nomeJogador transition-all inline-flex p-2 items-center min-h-[40px] border-t-2 border-orange-600"
+                class="nomeJogador transition-all inline-flex p-2 items-center min-h-[50px] border-t-2 border-orange-600"
                 :title="indexFormacao['jogador_2']"
+                @click="indexFormacao['jogador_1'].length > 0 &&
+                  indexFormacao['jogador_2'].length > 0 &&
+                  escolheVencedor({
+                    posicao: num,
+                    bloco: index_f,
+                    linha: listaJogos[`linha_${num}`][index_f],
+                    vencedor: 'jogador_2'
+                  })"
               >
                 {{indexFormacao['jogador_2']}}
                 <div
@@ -102,7 +112,7 @@
                   v-if="indexFormacao['jogador_1'].length > 0 && indexFormacao['jogador_2'].length > 0"
                 >
                   <button
-                    class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner"
+                    class="flex items-center justify-center w-[32px] h-[32px] rounded bg-green-400 shadow-inner"
                     @click="escolheVencedor({
                       posicao: num,
                       bloco: index_f,
@@ -112,25 +122,16 @@
                   >
                     <Icon
                       class="drop-shadow"
+                      height="28"
                       icon="material-symbols:trophy"
                       color="#fff"
                     />
                   </button>
-                  <!-- <button class="flex items-center justify-center w-[24px] h-[24px] rounded bg-green-400 shadow-inner">
-                    <Icon
-                      class="drop-shadow"
-                      icon="material-symbols:trophy"
-                      color="#fff"
-                    />
-                  </button> -->
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div v-if="jogadorCampeao.length > 0">
-        O vencedor foi: {{jogadorCampeao}}
       </div>
     </template>
   </template>
@@ -144,6 +145,7 @@ import {
   updateChosenPlayers,
   getRegras,
   setRegra,
+  setVencedor,
 } from "/src/store/copinha/regras.js";
 import { useStore } from "@nanostores/vue";
 import {
@@ -179,7 +181,7 @@ const chosenPlayers = useStore($chosenPlayers);
 const gerarBatalha = () => {
   const jogadores =
     nomesBatalha.value.length > 0
-      ? nomesBatalha.value?.split(",").filter((n) => n.trim())
+      ? nomesBatalha.value?.split(/\s+|\,\s*/).filter((n) => n.trim())
       : chosenPlayers.value;
 
   if (jogadores.length === 0) {
@@ -232,6 +234,7 @@ const escolheVencedor = ({ posicao, bloco, linha, vencedor }) => {
       `jogador_${(bloco % 2) + 1}`
     ] = linha[vencedor];
   } else {
+    setVencedor(linha[vencedor]);
     jogadorCampeao.value = linha[vencedor];
   }
 };
@@ -370,7 +373,10 @@ const gerarRegra = () => {
 const limparJogares = () => {
   const jogadores = [];
   listaJogos.value = {};
+  nomesBatalha.value = "";
+  regrasUsadas.value = regrasGerais.value;
   setRegra({});
+  setVencedor("");
   updateChosenPlayers(jogadores);
 };
 watch(nomesBatalha, () => {
