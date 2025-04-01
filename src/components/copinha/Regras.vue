@@ -81,6 +81,16 @@
                 >
               </div>
             </template>
+            <template v-else-if="regraEscolhida.regra_especial_tipo.tipo === 'nova_regra'">
+              <template
+                v-for="(regraIn, index) in regraEscolhida.modelo"
+                :key="`regra_in_${index}`"
+              >
+                <hr class="my-4">
+                <strong v-if="regraEscolhida.modelo[index - 1]?.jogador !== regraIn.jogador">{{ regraIn.jogador === 'jogador_1' ? 'First Pick' : 'Last Pick' }}<br></strong>
+                {{ regraIn.regra.titulo }}: <div v-html="regraIn.regra.descricao"></div>
+              </template>
+            </template>
           </template>
           <!-- {{ regraEspecialTipo.includes(regraEscolhida.regra_especial_tipo.tipo) }} - {{ regraEscolhida.regra_especial_tipo }} -->
         </div>

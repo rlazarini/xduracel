@@ -159,6 +159,7 @@ import { ref, watch, computed, onMounted } from "vue";
 const nomesBatalha = ref("");
 const gerarBatalhaButton = ref(true);
 const listaJogos = ref({});
+const regrasGerais = ref([]);
 const regrasUsadas = ref([]);
 const jogadorCampeao = ref("");
 const regraEspecialTipo = ref([
@@ -235,9 +236,8 @@ const escolheVencedor = ({ posicao, bloco, linha, vencedor }) => {
   }
 };
 const gerarRegra = () => {
-  const randomRegra = regrasUsadas.value.at(
-    randomNumber(0, regrasUsadas.value.length - 1)
-  );
+  const posicaoRegraUsada = randomNumber(0, regrasUsadas.value.length - 1);
+  const randomRegra = regrasUsadas.value[posicaoRegraUsada];
   const regraEscolhida = JSON.parse(JSON.stringify(randomRegra));
   if (
     regraEscolhida?.regra_especial &&
@@ -247,7 +247,33 @@ const gerarRegra = () => {
   ) {
     switch (regraEscolhida?.regra_especial_tipo?.tipo) {
       case "nova_regra":
-        // console.log("NOVA REGRA");
+        const sortRegra = sortArray(
+          regrasGerais.value.filter((reg) => !reg?.amaldicoar)
+        );
+        const formatoRegra =
+          regraEscolhida?.regra_especial_tipo?.formato || false;
+        const quantidadeRegra =
+          regraEscolhida?.regra_especial_tipo?.quantidade || false;
+        regraEscolhida["modelo"] = [];
+        if (formatoRegra) {
+          formatoRegra.forEach((posicao, index) => {
+            for (let i = 0; i < posicao; i++) {
+              const posicaoRegra = randomNumber(0, sortRegra.length - 1);
+              regraEscolhida["modelo"].push({
+                jogador: `jogador_${index + 1}`,
+                regra: sortRegra[posicaoRegra],
+              });
+              sortRegra.splice(posicaoRegra, 1);
+            }
+          });
+        } else if (quantidadeRegra) {
+          for (let i = 0; i < quantidadeRegra; i++) {
+            const posicaoRegra = randomNumber(0, sortRegra.length - 1);
+            regraEscolhida["modelo"].push({
+              elemento: sortRegra[posicaoRegra],
+            });
+          }
+        }
         break;
       case "elemento":
         const sortElemento = sortArray(elementos);
@@ -326,6 +352,8 @@ const gerarRegra = () => {
               buff: sortBuff[posicaoBuff],
               debuff: sortDebuff[posicaoDebuff],
             });
+            sortBuff.splice(posicaoBuff, 1);
+            sortDebuff.splice(posicaoDebuff, 1);
           }
         }
         break;
@@ -336,6 +364,7 @@ const gerarRegra = () => {
       // console.log("nenhuma regra");
     }
   }
+  regrasUsadas.value.splice(posicaoRegraUsada, 1);
   return regraEscolhida;
 };
 const limparJogares = () => {
@@ -350,7 +379,8 @@ watch(nomesBatalha, () => {
 });
 onMounted(async () => {
   await getRegras();
-  regrasUsadas.value = sortArray(listaRegras.value.regras);
+  regrasGerais.value = sortArray(listaRegras.value.regras);
+  regrasUsadas.value = regrasGerais.value;
   updateChosenPlayers();
   gerarBatalha();
 });
